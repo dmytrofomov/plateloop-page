@@ -6,7 +6,7 @@ Static GitHub Pages, published from `master:/docs`. `docs/CNAME` sets the custom
 
 ## Public identity
 
-Product name: **PlateLoop**. Current Telegram URL: **https://t.me/plan_eat_ai_bot**.
+Product name: **PlateLoop**. Current Telegram URL: **https://t.me/plateloop_bot**.
 The Telegram username stays live until the bot itself is renamed. Update `window.SITE` plus static HTML / metadata when the actual address changes.
 
 Main line: **Твоя їжа. Твій ритм.**

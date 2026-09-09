@@ -63,7 +63,7 @@ async function main(){
       await page.locator('summary').nth(1).click();
       assert.equal(await page.locator('.faq details').nth(1).getAttribute('open'),'');
       const links=await page.locator('a[data-site="botUrl"]').evaluateAll(xs=>xs.map(x=>x.href));
-      assert(links.length>=3&&links.every(x=>x==='https://t.me/plan_eat_ai_bot?start=web_hostgpt'),'Bot links changed or missing');
+      assert(links.length>=3&&links.every(x=>x==='https://t.me/plateloop_bot'),'Bot links changed or missing');
       assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://plateloop.app/');
       assert.equal(await page.locator('meta[property="og:image"]').getAttribute('content'),'https://plateloop.app/brand/social-cover.jpg');
       const data=await page.locator('#jsonld').textContent();assert(JSON.parse(data)['@graph'].some(x=>x.name==='PlateLoop у Telegram'));

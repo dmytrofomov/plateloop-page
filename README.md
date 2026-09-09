@@ -4,7 +4,7 @@ Ukrainian landing page and brand kit for the PlateLoop Telegram bot.
 
 - Website: https://plateloop.app/
 - Brand kit: https://plateloop.app/brand/
-- Bot: https://t.me/plan_eat_ai_bot
+- Bot: https://t.me/plateloop_bot
 
 Adapted from the local `host-gpt-page` website. Layout, photography and bot functionality are preserved; the public identity is PlateLoop.
 
