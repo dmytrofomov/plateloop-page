@@ -1,8 +1,8 @@
 # PlateLoop — landing and brand kit
 
-Public landing: https://dmytrofomov.github.io/plateloop-page/ · Brand kit: https://dmytrofomov.github.io/plateloop-page/brand/
+Public landing: https://plateloop.app/ · Brand kit: https://plateloop.app/brand/
 
-Static GitHub Pages, published from `master:/docs`, without a custom domain.
+Static GitHub Pages, published from `master:/docs`. `docs/CNAME` sets the custom domain to `plateloop.app`; DNS is managed at Hostinger.
 
 ## Public identity
 

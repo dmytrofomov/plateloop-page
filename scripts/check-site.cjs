@@ -64,8 +64,8 @@ async function main(){
       assert.equal(await page.locator('.faq details').nth(1).getAttribute('open'),'');
       const links=await page.locator('a[data-site="botUrl"]').evaluateAll(xs=>xs.map(x=>x.href));
       assert(links.length>=3&&links.every(x=>x==='https://t.me/plan_eat_ai_bot?start=web_hostgpt'),'Bot links changed or missing');
-      assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://dmytrofomov.github.io/plateloop-page/');
-      assert.equal(await page.locator('meta[property="og:image"]').getAttribute('content'),'https://dmytrofomov.github.io/plateloop-page/brand/social-cover.jpg');
+      assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://plateloop.app/');
+      assert.equal(await page.locator('meta[property="og:image"]').getAttribute('content'),'https://plateloop.app/brand/social-cover.jpg');
       const data=await page.locator('#jsonld').textContent();assert(JSON.parse(data)['@graph'].some(x=>x.name==='PlateLoop у Telegram'));
       await page.evaluate(async()=>{for(let y=0;y<document.body.scrollHeight;y+=700){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,40));}window.scrollTo(0,0);});
       assert.equal(await page.locator('img').evaluateAll(xs=>xs.filter(x=>!x.complete||!x.naturalWidth).length),0,'Broken page image');

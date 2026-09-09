@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dmytrofomov.github.io/plateloop-page/sitemap.xml
+Sitemap: https://plateloop.app/sitemap.xml
