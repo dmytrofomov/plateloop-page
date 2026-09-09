@@ -1,0 +1,15 @@
+{
+  "name": "plateloop-page",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PlateLoop static website for GitHub Pages",
+  "scripts": {
+    "build:brand": "node scripts/build-brand.cjs",
+    "export:brand": "node scripts/check-site.cjs --export",
+    "test": "node scripts/check-site.cjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0",
+    "sharp": "^0.35.4"
+  }
+}
