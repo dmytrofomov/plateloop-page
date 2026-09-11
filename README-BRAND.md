@@ -9,7 +9,9 @@ Static GitHub Pages, published from `master:/docs`. `docs/CNAME` sets the custom
 Product name: **PlateLoop**. Current Telegram URL: **https://t.me/plateloop_bot**.
 The Telegram username stays live until the bot itself is renamed. Update `window.SITE` plus static HTML / metadata when the actual address changes.
 
-Main line: **Твоя їжа. Твій ритм.**
+Positioning: **(Не) ще один щоденник калорій.** Recipes, meal planning, shopping and food logging in one Telegram chat. Use the whole cycle or only the parts you need.
+
+Brand line: **Твоя їжа. Твій ритм.** Payment model: pay as you go, no mandatory subscription, no charge for periods of inactivity, no payment for unused functions. The product remains in closed beta; no numerical tariffs have been announced. Describe this as the payment model, not as a published price list or a claim that paid billing is already live.
 
 Brand rules, downloadable assets, copy examples and image provenance are in `docs/brand/README.md` and `docs/brand/prompts.md`. `docs/brand/index.html` is the public gallery. `docs/brand/plateloop-brand-kit.zip` contains editable sources, photographs, icons and finished promotion images.
 
@@ -18,7 +20,7 @@ Brand rules, downloadable assets, copy examples and image provenance are in `doc
 - `docs/index.html`: Ukrainian landing, static SEO / OG / JSON-LD, current bot links.
 - `docs/styles.css`: shared layout and Telegram demo.
 - `docs/plateloop.css`: PlateLoop identity, responsive photo hero and editorial section.
-- `docs/app.js`: brand binding, sticky CTA, keyboard-accessible demo tabs.
+- `docs/app.js`: brand binding, sticky CTA, user-controlled, keyboard-accessible demo tabs.
 - `docs/brand/`: SVG/PNG identity, 12 SVG icons, 3 original photos, 4 promotion exports.
 - `docs/img/plateloop-*.webp`: optimized photos. Original older assets retained for compatibility.
 
