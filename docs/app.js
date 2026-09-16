@@ -48,18 +48,10 @@
   var year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
 
-  /* Keep the mobile action out of the way while another primary action is visible. */
+  /* One persistent header keeps the main action within reach. */
   var header = document.getElementById("header");
-  var mobileCta = document.querySelector(".mobile-cta");
-  var hero = document.querySelector(".hero");
-  var finalCta = document.querySelector(".cta-final");
   var onScroll = function () {
     if (header) header.classList.toggle("is-scrolled", window.scrollY > 8);
-    if (mobileCta) {
-      var afterHero = hero ? hero.getBoundingClientRect().bottom < 0 : window.scrollY > 400;
-      var beforeFinal = !finalCta || finalCta.getBoundingClientRect().top > window.innerHeight;
-      mobileCta.classList.toggle("is-shown", afterHero && beforeFinal);
-    }
   };
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });

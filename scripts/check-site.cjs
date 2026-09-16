@@ -105,7 +105,7 @@ async function main(){
     // The product must remain readable without JavaScript.
     const noJs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
     const plain=await noJs.newPage();await plain.goto(base+'/',{waitUntil:'load'});
-    assert.equal(await plain.locator('#how-title').evaluate(e=>getComputedStyle(e.closest('.reveal')).opacity),'1');
+    assert.equal(await plain.locator('#inside-title').evaluate(e=>getComputedStyle(e.closest('.reveal')).opacity),'1');
     assert.equal(await plain.locator('h1').isVisible(),true);
     for(const name of ['log','day','plan','shop'])assert.equal(await plain.locator('#scene-'+name).isVisible(),true,'Demo content missing without JavaScript: '+name);
     await noJs.close();
