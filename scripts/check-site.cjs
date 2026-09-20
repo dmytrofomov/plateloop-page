@@ -55,10 +55,17 @@ async function main(){
         assert.equal(await page.locator('#tab-'+name).getAttribute('aria-selected'),'true');
         assert.equal(await page.locator('#scene-'+name).isVisible(),true);
       }
-      await page.locator('#tab-shop').press('Home');
+      await page.locator('#tab-day').press('Home');
       assert.equal(await page.locator('#tab-log').getAttribute('aria-selected'),'true');
       await page.locator('#tab-log').press('ArrowRight');
       assert.equal(await page.locator('#tab-day').getAttribute('aria-selected'),'true');
+      await page.locator('#tab-day').press('ArrowRight');
+      assert.equal(await page.locator('#tab-log').getAttribute('aria-selected'),'true','Journal keyboard navigation must stay in its scenario');
+      assert.equal(await page.locator('#scene-shop').isVisible(),true,'Changing the journal must preserve the planning selection');
+      await page.locator('#tab-shop').press('Home');
+      assert.equal(await page.locator('#tab-plan').getAttribute('aria-selected'),'true');
+      assert.equal(await page.locator('#scene-log').isVisible(),true,'Changing planning must preserve the journal selection');
+      assert.equal(await page.locator('[data-demo] .tabs').count(),2,'Scenarios need independent tab groups');
       await page.locator('#faq').scrollIntoViewIfNeeded();
       await page.locator('summary').nth(1).click();
       assert.equal(await page.locator('.faq details').nth(1).getAttribute('open'),'');
@@ -82,7 +89,10 @@ async function main(){
     assert.equal(await page.locator('#scene-plan').isVisible(),true,'Deep link does not select the requested demo');
     await page.locator('#tab-plan').press('End');
     await page.locator('#tab-shop').press('ArrowRight');
-    assert.equal(await page.locator('#tab-log').getAttribute('aria-selected'),'true','Keyboard navigation does not wrap');
+    assert.equal(await page.locator('#tab-plan').getAttribute('aria-selected'),'true','Planning keyboard navigation must wrap within planning');
+    await page.goto(base+'/?scene=day',{waitUntil:'networkidle'});
+    assert.equal(await page.locator('#scene-day').isVisible(),true,'Journal deep link is lost');
+    assert.equal(await page.locator('#scene-plan').isVisible(),true,'Journal deep link must preserve the planning demo');
     // Once chosen, an example must not switch itself while a visitor is reading.
     const manual=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});
     const demo=await manual.newPage();await demo.clock.install();await demo.goto(base+'/?scene=plan',{waitUntil:'networkidle'});

@@ -58,42 +58,44 @@
   window.addEventListener("resize", onScroll, { passive: true });
 
   /* Tabs change only when chosen, with full keyboard navigation. */
-  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab[data-scene]"));
-  var scenes = Array.prototype.slice.call(document.querySelectorAll(".scene"));
-  if (tabs.length && scenes.length) {
-    var current = 0;
-    var show = function (index) {
-      current = (index + tabs.length) % tabs.length;
+  document.querySelectorAll("[data-demo]").forEach(function (demo) {
+    var tabs = Array.prototype.slice.call(demo.querySelectorAll(".tab[data-scene]"));
+    var scenes = Array.prototype.slice.call(demo.querySelectorAll(".scene"));
+    if (tabs.length && scenes.length) {
+      var current = 0;
+      var show = function (index) {
+        current = (index + tabs.length) % tabs.length;
+        tabs.forEach(function (tab, i) {
+          var active = i === current;
+          tab.classList.toggle("is-active", active);
+          tab.setAttribute("aria-selected", String(active));
+          tab.setAttribute("tabindex", active ? "0" : "-1");
+        });
+        scenes.forEach(function (scene, i) {
+          var active = i === current;
+          scene.classList.toggle("is-active", active);
+          scene.hidden = !active;
+        });
+      };
       tabs.forEach(function (tab, i) {
-        var active = i === current;
-        tab.classList.toggle("is-active", active);
-        tab.setAttribute("aria-selected", String(active));
-        tab.setAttribute("tabindex", active ? "0" : "-1");
+        tab.addEventListener("click", function () { show(i); });
+        tab.addEventListener("keydown", function (event) {
+          var index;
+          switch (event.key) {
+            case "ArrowRight": case "ArrowDown": index = i + 1; break;
+            case "ArrowLeft": case "ArrowUp": index = i - 1; break;
+            case "Home": index = 0; break;
+            case "End": index = tabs.length - 1; break;
+            default: return;
+          }
+          event.preventDefault();
+          show(index);
+          tabs[current].focus();
+        });
       });
-      scenes.forEach(function (scene, i) {
-        var active = i === current;
-        scene.classList.toggle("is-active", active);
-        scene.hidden = !active;
-      });
-    };
-    tabs.forEach(function (tab, i) {
-      tab.addEventListener("click", function () { show(i); });
-      tab.addEventListener("keydown", function (event) {
-        var index;
-        switch (event.key) {
-          case "ArrowRight": case "ArrowDown": index = i + 1; break;
-          case "ArrowLeft": case "ArrowUp": index = i - 1; break;
-          case "Home": index = 0; break;
-          case "End": index = tabs.length - 1; break;
-          default: return;
-        }
-        event.preventDefault();
-        show(index);
-        tabs[current].focus();
-      });
-    });
-    var requestedScene = new URLSearchParams(location.search).get("scene");
-    var startIndex = tabs.findIndex(function (tab) { return tab.getAttribute("data-scene") === requestedScene; });
-    show(startIndex < 0 ? 0 : startIndex);
-  }
+      var requestedScene = new URLSearchParams(location.search).get("scene");
+      var startIndex = tabs.findIndex(function (tab) { return tab.getAttribute("data-scene") === requestedScene; });
+      show(startIndex < 0 ? 0 : startIndex);
+    }
+  });
 })();
