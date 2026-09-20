@@ -15,7 +15,7 @@
       if (attr) el.setAttribute(attr, val);
       else el.textContent = val;
     });
-    var title = s.brand + " — (не) ще один щоденник калорій";
+    var title = s.brand + " — Telegram-бот для щоденного харчування";
     document.title = title;
     [
       ['meta[property="og:title"]', title],
@@ -57,43 +57,50 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll, { passive: true });
 
-  /* Tabs change only when chosen, with full keyboard navigation. */
-  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab[data-scene]"));
-  var scenes = Array.prototype.slice.call(document.querySelectorAll(".scene"));
-  if (tabs.length && scenes.length) {
-    var current = 0;
-    var show = function (index) {
-      current = (index + tabs.length) % tabs.length;
-      tabs.forEach(function (tab, i) {
-        var active = i === current;
-        tab.classList.toggle("is-active", active);
-        tab.setAttribute("aria-selected", String(active));
-        tab.setAttribute("tabindex", active ? "0" : "-1");
-      });
-      scenes.forEach(function (scene, i) {
-        var active = i === current;
-        scene.classList.toggle("is-active", active);
-        scene.hidden = !active;
-      });
-    };
-    tabs.forEach(function (tab, i) {
-      tab.addEventListener("click", function () { show(i); });
+  /* Each demo group changes only when chosen, with full keyboard navigation. */
+  var groups = Array.prototype.slice.call(document.querySelectorAll(".tabs")).map(function (box) {
+    var tabs = Array.prototype.slice.call(box.querySelectorAll(".tab[data-scene]"));
+    var scenes = tabs.map(function (tab) { return document.getElementById(tab.getAttribute("aria-controls")); });
+    return { box: box, tabs: tabs, scenes: scenes };
+  }).filter(function (group) {
+    return group.tabs.length > 0 && group.scenes.every(function (scene) { return !!scene; });
+  });
+  var showIn = function (group, index) {
+    var current = (index + group.tabs.length) % group.tabs.length;
+    group.tabs.forEach(function (tab, i) {
+      var active = i === current;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-selected", String(active));
+      tab.setAttribute("tabindex", active ? "0" : "-1");
+    });
+    group.scenes.forEach(function (scene, i) {
+      var active = i === current;
+      scene.classList.toggle("is-active", active);
+      scene.hidden = !active;
+    });
+    return current;
+  };
+  groups.forEach(function (group) {
+    group.tabs.forEach(function (tab, i) {
+      tab.addEventListener("click", function () { showIn(group, i); });
       tab.addEventListener("keydown", function (event) {
         var index;
         switch (event.key) {
           case "ArrowRight": case "ArrowDown": index = i + 1; break;
           case "ArrowLeft": case "ArrowUp": index = i - 1; break;
           case "Home": index = 0; break;
-          case "End": index = tabs.length - 1; break;
+          case "End": index = group.tabs.length - 1; break;
           default: return;
         }
         event.preventDefault();
-        show(index);
-        tabs[current].focus();
+        var current = showIn(group, index);
+        group.tabs[current].focus();
       });
     });
-    var requestedScene = new URLSearchParams(location.search).get("scene");
-    var startIndex = tabs.findIndex(function (tab) { return tab.getAttribute("data-scene") === requestedScene; });
-    show(startIndex < 0 ? 0 : startIndex);
-  }
+  });
+  var requestedScene = new URLSearchParams(location.search).get("scene");
+  groups.forEach(function (group) {
+    var startIndex = group.tabs.findIndex(function (tab) { return tab.getAttribute("data-scene") === requestedScene; });
+    showIn(group, startIndex < 0 ? 0 : startIndex);
+  });
 })();

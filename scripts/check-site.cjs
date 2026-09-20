@@ -49,15 +49,19 @@ async function main(){
       assert.match(await page.title(),/^PlateLoop/);
       assert.equal(await page.locator('h1').count(),1);
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`Overflow at ${width}`);
-      await page.locator('#inside').scrollIntoViewIfNeeded();
+      await page.locator('#ate').scrollIntoViewIfNeeded();
       for(const name of ['log','day','plan','shop']){
         await page.locator('#tab-'+name).click();
         assert.equal(await page.locator('#tab-'+name).getAttribute('aria-selected'),'true');
         assert.equal(await page.locator('#scene-'+name).isVisible(),true);
       }
       await page.locator('#tab-shop').press('Home');
-      assert.equal(await page.locator('#tab-log').getAttribute('aria-selected'),'true');
-      await page.locator('#tab-log').press('ArrowRight');
+      assert.equal(await page.locator('#tab-plan').getAttribute('aria-selected'),'true');
+      await page.locator('#tab-plan').press('ArrowRight');
+      assert.equal(await page.locator('#tab-shop').getAttribute('aria-selected'),'true');
+      await page.locator('#tab-day').press('End');
+      assert.equal(await page.locator('#tab-day').getAttribute('aria-selected'),'true');
+      await page.locator('#tab-log').press('ArrowLeft');
       assert.equal(await page.locator('#tab-day').getAttribute('aria-selected'),'true');
       await page.locator('#faq').scrollIntoViewIfNeeded();
       await page.locator('summary').nth(1).click();
@@ -69,14 +73,14 @@ async function main(){
       const data=await page.locator('#jsonld').textContent();assert(JSON.parse(data)['@graph'].some(x=>x.name==='PlateLoop у Telegram'));
       const faq=JSON.parse(data)['@graph'].find(x=>x['@type']==='FAQPage');
       const visibleFaq=await page.locator('.faq details').evaluateAll(xs=>xs.map(x=>({question:x.querySelector('summary').textContent.trim(),answer:x.querySelector('p').textContent.trim()})));
-      assert.deepEqual(faq.mainEntity.map(x=>({question:x.name,answer:x.acceptedAnswer.text})),visibleFaq,'Structured FAQ differs from visible payment or product information');
+      assert.deepEqual(faq.mainEntity.map(x=>({question:x.name,answer:x.acceptedAnswer.text})),visibleFaq,'Structured FAQ differs from visible product information');
       assert.equal(await page.locator('meta[property="og:title"]').getAttribute('content'),await page.title(),'Social title differs from page title');
       const missingAnchors=await page.locator('a[href^="#"]').evaluateAll(xs=>xs.filter(x=>!document.getElementById(x.getAttribute('href').slice(1))).map(x=>x.getAttribute('href')));
       assert.deepEqual(missingAnchors,[],'Navigation points to missing sections');
       await page.evaluate(async()=>{for(let y=0;y<document.body.scrollHeight;y+=700){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,40));}window.scrollTo(0,0);});
       assert.equal(await page.locator('img').evaluateAll(xs=>xs.filter(x=>!x.complete||!x.naturalWidth).length),0,'Broken page image');
       await page.screenshot({path:path.join(out,`landing-${width}.png`),fullPage:true});
-      report.push(`PASS ${width}px: no overflow, PlateLoop metadata, 4 tabs, keyboard, FAQ, Telegram links, all images loaded`);
+      report.push(`PASS ${width}px: no overflow, PlateLoop metadata, 2 demo groups, keyboard, FAQ, Telegram links, all images loaded`);
     }
     await page.goto(base+'/?scene=plan',{waitUntil:'networkidle'});
     assert.equal(await page.locator('#scene-plan').isVisible(),true,'Deep link does not select the requested demo');
@@ -86,10 +90,10 @@ async function main(){
     // Once chosen, an example must not switch itself while a visitor is reading.
     const manual=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});
     const demo=await manual.newPage();await demo.clock.install();await demo.goto(base+'/?scene=plan',{waitUntil:'networkidle'});
-    await demo.locator('#inside').scrollIntoViewIfNeeded();await demo.clock.runFor(16000);
+    await demo.locator('#ate').scrollIntoViewIfNeeded();await demo.clock.runFor(16000);
     assert.equal(await demo.locator('#tab-plan').getAttribute('aria-selected'),'true','The demo changes without user input');
     await manual.close();
-    report.push('PASS payment FAQ matches JSON-LD; navigation anchors, social titles, deep links and manual demo behavior');
+    report.push('PASS FAQ matches JSON-LD; navigation anchors, social titles, deep links and manual demo behavior');
     await page.setViewportSize({width:1440,height:1000});
     await page.goto(base+'/brand/',{waitUntil:'networkidle'});
     await page.evaluate(async()=>{for(let y=0;y<document.body.scrollHeight;y+=700){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,40));}window.scrollTo(0,0);});
@@ -105,7 +109,7 @@ async function main(){
     // The product must remain readable without JavaScript.
     const noJs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
     const plain=await noJs.newPage();await plain.goto(base+'/',{waitUntil:'load'});
-    assert.equal(await plain.locator('#inside-title').evaluate(e=>getComputedStyle(e.closest('.reveal')).opacity),'1');
+    assert.equal(await plain.locator('#ate-title').evaluate(e=>getComputedStyle(e.closest('.reveal')).opacity),'1');
     assert.equal(await plain.locator('h1').isVisible(),true);
     for(const name of ['log','day','plan','shop'])assert.equal(await plain.locator('#scene-'+name).isVisible(),true,'Demo content missing without JavaScript: '+name);
     await noJs.close();

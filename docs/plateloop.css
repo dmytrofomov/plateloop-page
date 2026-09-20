@@ -41,6 +41,7 @@ h3 { line-height:1.3; }
 .hero-not { color:var(--tomato); }
 .badge { padding:0; border:0; background:none; font-size:.75rem; letter-spacing:.09em; text-transform:uppercase; margin-bottom:24px; line-height:1.6; }
 .lead { font-size:1.125rem; max-width:28rem; line-height:1.7; margin-bottom:28px; text-wrap:balance; }
+.hero-note { margin:14px 0 0; font-size:.875rem; color:var(--muted); }
 .hero .cta-row { gap:14px 24px; }
 .hero .cta-row .btn:first-child { background:var(--tomato); border-color:var(--tomato); }
 .hero .cta-row .btn:first-child:hover { background:#a43224; border-color:#a43224; }
@@ -147,6 +148,7 @@ h3 { line-height:1.3; }
 .choice-list span { color:var(--muted); font-size:.9375rem; }
 .honest-photo img { aspect-ratio:1.04; border-radius:24px; box-shadow:none; object-fit:cover; }
 .honest-photo figcaption { margin:14px 0 0; font-size:.8125rem; }
+.author-quote { margin:0; max-width:44rem; font-size:1.25rem; line-height:1.7; letter-spacing:-.01em; border-left:3px solid var(--accent); padding-left:24px; }
 .faq { gap:0; }
 .faq details { border:0; border-bottom:1px solid var(--hairline-2); border-radius:0; background:transparent; }
 .faq details:first-child { border-top:1px solid var(--hairline-2); }

@@ -11,7 +11,7 @@ The Telegram username stays live until the bot itself is renamed. Update `window
 
 Positioning: **(Не) ще один щоденник калорій.** Recipes, meal planning, shopping and food logging in one Telegram chat. Use the whole cycle or only the parts you need.
 
-Brand line: **Твоя їжа. Твій ритм.** While the closed beta lasts, testing is free with a daily free limit; no public tariffs have been announced. Do not present this as a published price list and do not invent amounts, packages or billing terms.
+Brand line: **Твоя їжа. Твій ритм.** While the product is in testing, the landing carries no payment promo block and no payment promises: no public tariffs, no invented amounts, packages or billing terms.
 
 Brand rules, downloadable assets, copy examples and image provenance are in `docs/brand/README.md` and `docs/brand/prompts.md`. `docs/brand/index.html` is the public gallery. `docs/brand/plateloop-brand-kit.zip` contains editable sources, photographs, icons and finished promotion images.
 
