@@ -514,10 +514,6 @@ h1 em, h2 em {
 .lang-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; background: var(--surface); box-shadow: 0 1px 1px rgba(0,0,0,.05); font-size: 0.84rem; color: var(--ink-2); }
 .lang-flag { display: grid; place-items: center; flex: none; width: 30px; height: 30px; border-radius: 8px; background: var(--mint-soft); color: var(--accent); font-size: 0.72rem; font-weight: 800; letter-spacing: .04em; }
 
-.privacy-row { display: grid; gap: 8px; }
-.p-chip { padding: 11px 14px; border-radius: 12px; background: var(--surface); box-shadow: 0 1px 1px rgba(0,0,0,.05); font-size: 0.86rem; font-weight: 700; color: var(--ink-2); text-align: center; }
-.p-chip.p-danger { color: #b3412a; }
-
 /* ---------- Inside the bot ---------- */
 .inside { display: grid; gap: 40px; align-items: center; }
 .tabs { display: grid; gap: 8px; margin-top: 32px; }
@@ -645,9 +641,8 @@ h1 em, h2 em {
   .b-day { grid-column: span 3; }
   .b-recipe { grid-column: span 2; }
   .b-plan { grid-column: span 4; }
-  .b-shop { grid-column: span 2; }
-  .b-privacy { grid-column: span 2; }
-  .b-lang { grid-column: span 2; }
+  .b-shop { grid-column: span 3; }
+  .b-lang { grid-column: span 3; }
   .b-day .bento-visual { grid-template-columns: auto 1fr; align-items: center; gap: 20px; }
   .b-day .macro-list { margin: 0; }
   .b-shop .bento-visual { grid-template-columns: 1fr; }
