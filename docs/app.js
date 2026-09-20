@@ -98,9 +98,51 @@
       });
     });
   });
+  /* One switcher flips between the two scenario screens. */
+  var switches = Array.prototype.slice.call(document.querySelectorAll(".switch[data-scenario]"));
+  var scenarios = switches.map(function (sw) { return document.getElementById(sw.getAttribute("data-scenario")); }).filter(Boolean);
+  var showScenario = function (id) {
+    switches.forEach(function (sw) {
+      var active = sw.getAttribute("data-scenario") === id;
+      sw.classList.toggle("is-active", active);
+      sw.setAttribute("aria-selected", String(active));
+      sw.setAttribute("tabindex", active ? "0" : "-1");
+    });
+    scenarios.forEach(function (panel) {
+      var active = panel.id === id;
+      panel.classList.toggle("is-active", active);
+      panel.hidden = !active;
+    });
+  };
+  if (switches.length && scenarios.length) {
+    switches.forEach(function (sw, i) {
+      sw.addEventListener("click", function () { showScenario(sw.getAttribute("data-scenario")); });
+      sw.addEventListener("keydown", function (event) {
+        var index;
+        switch (event.key) {
+          case "ArrowRight": case "ArrowDown": index = i + 1; break;
+          case "ArrowLeft": case "ArrowUp": index = i - 1; break;
+          case "Home": index = 0; break;
+          case "End": index = switches.length - 1; break;
+          default: return;
+        }
+        event.preventDefault();
+        var next = switches[(index + switches.length) % switches.length];
+        showScenario(next.getAttribute("data-scenario"));
+        next.focus();
+      });
+    });
+    showScenario(switches[0].getAttribute("data-scenario"));
+  }
   var requestedScene = new URLSearchParams(location.search).get("scene");
   groups.forEach(function (group) {
     var startIndex = group.tabs.findIndex(function (tab) { return tab.getAttribute("data-scene") === requestedScene; });
-    showIn(group, startIndex < 0 ? 0 : startIndex);
+    if (startIndex >= 0) {
+      var panel = group.box.closest(".scenario");
+      if (panel) showScenario(panel.id);
+      showIn(group, startIndex);
+    } else {
+      showIn(group, 0);
+    }
   });
 })();

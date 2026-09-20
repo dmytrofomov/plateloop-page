@@ -47,6 +47,9 @@
     .tabs { display: none; }
     .scene, .scene[hidden] { display: flex; }
     .scene + .scene { border-top: 1px solid var(--hairline-2); }
+    .switcher { display: none; }
+    .scenario[hidden] { display: block; }
+    .scenario + .scenario { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--hairline-2); }
   </style></noscript>
 
   <script type="application/ld+json" id="jsonld">
@@ -146,7 +149,7 @@
       </a>
       <nav class="nav" aria-label="Навігація">
         <a href="#how">Як це працює</a>
-        <a href="#ate">Сценарії</a>
+        <a href="#scenarios">Сценарії</a>
         <a href="#faq">Питання</a>
       </nav>
       <a class="btn btn-sm btn-dark" data-site="botUrl" data-site-attr="href" href="https://t.me/plateloop_bot?start=web_plateloop">
@@ -233,11 +236,23 @@
       </div>
     </section>
 
-    <!-- ================= SCENARIO A: WHAT YOU ATE ================= -->
-    <section class="section" id="ate" aria-labelledby="ate-title">
-      <div class="wrap inside">
+    <!-- ================= SCENARIOS ================= -->
+    <section class="section section-tint" id="scenarios" aria-label="Сценарії">
+      <div class="wrap">
+        <div class="switcher reveal" role="tablist" aria-label="Сценарії">
+          <button class="switch is-active" role="tab" aria-selected="true" aria-controls="scenario-ate" id="switch-ate" data-scenario="scenario-ate">
+            <span class="switch-title">Запиши, що вже з’їв</span>
+            <span class="switch-desc">Запис і підсумок дня</span>
+          </button>
+          <button class="switch" role="tab" aria-selected="false" aria-controls="scenario-plan" id="switch-plan" data-scenario="scenario-plan" tabindex="-1">
+            <span class="switch-title">Сплануй, що приготувати</span>
+            <span class="switch-desc">Меню і покупки</span>
+          </button>
+        </div>
+
+        <div class="scenario" id="scenario-ate" role="tabpanel" aria-labelledby="switch-ate">
+          <div class="inside">
         <div class="inside-copy reveal">
-          <h2 id="ate-title">Запиши,<br>що вже з’їв</h2>
           <p class="section-lead">Текст, фото чи голос → перевірка → запис у щоденнику.</p>
 
           <div class="tabs" role="tablist" aria-label="Сценарій: що вже з’їв">
@@ -319,14 +334,12 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
+        </div>
+        </div>
 
-    <!-- ================= SCENARIO B: WHAT TO COOK ================= -->
-    <section class="section section-tint" id="plan" aria-labelledby="plan-title">
-      <div class="wrap inside">
+        <div class="scenario" id="scenario-plan" role="tabpanel" aria-labelledby="switch-plan" hidden>
+          <div class="inside">
         <div class="inside-copy reveal">
-          <h2 id="plan-title">Сплануй,<br>що приготувати</h2>
           <p class="section-lead">Свої рецепти → меню → список покупок.</p>
           <p class="section-lead">Рецепт можна надіслати текстом, фото або посиланням з Instagram / TikTok — бот зробить чернетку, яку можна правити словами.</p>
 
@@ -406,6 +419,8 @@
                 <svg viewBox="0 0 24 24" class="c-ico"><rect x="9" y="3" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
               </div>
             </div>
+          </div>
+        </div>
           </div>
         </div>
       </div>

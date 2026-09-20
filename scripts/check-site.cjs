@@ -49,8 +49,22 @@ async function main(){
       assert.match(await page.title(),/^PlateLoop/);
       assert.equal(await page.locator('h1').count(),1);
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`Overflow at ${width}`);
-      await page.locator('#ate').scrollIntoViewIfNeeded();
-      for(const name of ['log','day','plan','shop']){
+      await page.locator('#scenarios').scrollIntoViewIfNeeded();
+      assert.equal(await page.locator('#scenario-ate').isVisible(),true);
+      assert.equal(await page.locator('#scenario-plan').isVisible(),false);
+      await page.locator('#switch-plan').click();
+      assert.equal(await page.locator('#switch-plan').getAttribute('aria-selected'),'true');
+      assert.equal(await page.locator('#scenario-plan').isVisible(),true);
+      assert.equal(await page.locator('#scenario-ate').isVisible(),false);
+      await page.locator('#switch-ate').click();
+      assert.equal(await page.locator('#scenario-ate').isVisible(),true);
+      for(const name of ['log','day']){
+        await page.locator('#tab-'+name).click();
+        assert.equal(await page.locator('#tab-'+name).getAttribute('aria-selected'),'true');
+        assert.equal(await page.locator('#scene-'+name).isVisible(),true);
+      }
+      await page.locator('#switch-plan').click();
+      for(const name of ['plan','shop']){
         await page.locator('#tab-'+name).click();
         assert.equal(await page.locator('#tab-'+name).getAttribute('aria-selected'),'true');
         assert.equal(await page.locator('#scene-'+name).isVisible(),true);
@@ -59,10 +73,15 @@ async function main(){
       assert.equal(await page.locator('#tab-plan').getAttribute('aria-selected'),'true');
       await page.locator('#tab-plan').press('ArrowRight');
       assert.equal(await page.locator('#tab-shop').getAttribute('aria-selected'),'true');
+      await page.locator('#switch-ate').click();
       await page.locator('#tab-day').press('End');
       assert.equal(await page.locator('#tab-day').getAttribute('aria-selected'),'true');
       await page.locator('#tab-log').press('ArrowLeft');
       assert.equal(await page.locator('#tab-day').getAttribute('aria-selected'),'true');
+      await page.locator('#switch-ate').click();
+      await page.locator('#switch-ate').press('ArrowRight');
+      assert.equal(await page.locator('#switch-plan').getAttribute('aria-selected'),'true');
+      assert.equal(await page.locator('#scenario-plan').isVisible(),true);
       await page.locator('#faq').scrollIntoViewIfNeeded();
       await page.locator('summary').nth(1).click();
       assert.equal(await page.locator('.faq details').nth(1).getAttribute('open'),'');
@@ -80,17 +99,18 @@ async function main(){
       await page.evaluate(async()=>{for(let y=0;y<document.body.scrollHeight;y+=700){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,40));}window.scrollTo(0,0);});
       assert.equal(await page.locator('img').evaluateAll(xs=>xs.filter(x=>!x.complete||!x.naturalWidth).length),0,'Broken page image');
       await page.screenshot({path:path.join(out,`landing-${width}.png`),fullPage:true});
-      report.push(`PASS ${width}px: no overflow, PlateLoop metadata, 2 demo groups, keyboard, FAQ, Telegram links, all images loaded`);
+      report.push(`PASS ${width}px: no overflow, PlateLoop metadata, scenario switcher, keyboard, FAQ, Telegram links, all images loaded`);
     }
     await page.goto(base+'/?scene=plan',{waitUntil:'networkidle'});
     assert.equal(await page.locator('#scene-plan').isVisible(),true,'Deep link does not select the requested demo');
+    assert.equal(await page.locator('#scenario-plan').isVisible(),true,'Deep link does not open the requested scenario');
     await page.locator('#tab-plan').press('End');
     await page.locator('#tab-shop').press('ArrowRight');
     assert.equal(await page.locator('#tab-log').getAttribute('aria-selected'),'true','Keyboard navigation does not wrap');
     // Once chosen, an example must not switch itself while a visitor is reading.
     const manual=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});
     const demo=await manual.newPage();await demo.clock.install();await demo.goto(base+'/?scene=plan',{waitUntil:'networkidle'});
-    await demo.locator('#ate').scrollIntoViewIfNeeded();await demo.clock.runFor(16000);
+    await demo.locator('#scenarios').scrollIntoViewIfNeeded();await demo.clock.runFor(16000);
     assert.equal(await demo.locator('#tab-plan').getAttribute('aria-selected'),'true','The demo changes without user input');
     await manual.close();
     report.push('PASS FAQ matches JSON-LD; navigation anchors, social titles, deep links and manual demo behavior');
@@ -109,8 +129,10 @@ async function main(){
     // The product must remain readable without JavaScript.
     const noJs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
     const plain=await noJs.newPage();await plain.goto(base+'/',{waitUntil:'load'});
-    assert.equal(await plain.locator('#ate-title').evaluate(e=>getComputedStyle(e.closest('.reveal')).opacity),'1');
+    assert.equal(await plain.locator('#how-title').evaluate(e=>getComputedStyle(e.closest('.reveal')).opacity),'1');
     assert.equal(await plain.locator('h1').isVisible(),true);
+    assert.equal(await plain.locator('#scenario-ate').isVisible(),true);
+    assert.equal(await plain.locator('#scenario-plan').isVisible(),true);
     for(const name of ['log','day','plan','shop'])assert.equal(await plain.locator('#scene-'+name).isVisible(),true,'Demo content missing without JavaScript: '+name);
     await noJs.close();
     assert.deepEqual(errors,[],'Browser JavaScript errors');
