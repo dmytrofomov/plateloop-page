@@ -12,8 +12,8 @@
       botHandle: "@plateloop_bot"
     };
   </script>
-  <title>PlateLoop — (не) ще один щоденник калорій</title>
-  <meta name="description" content="Рецепти, план харчування, покупки й щоденник їжі в одному чаті Telegram. Без окремого застосунку та обов’язкової підписки. Оплата за використання. PlateLoop — закрите тестування.">
+  <title>PlateLoop — Telegram-бот для щоденного харчування</title>
+  <meta name="description" content="Рецепти, меню й щоденник їжі в одному чаті Telegram.">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#183D32">
   <meta name="color-scheme" content="light">
@@ -25,8 +25,8 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="uk_UA">
   <meta property="og:site_name" content="PlateLoop у Telegram">
-  <meta property="og:title" content="PlateLoop — (не) ще один щоденник калорій">
-  <meta property="og:description" content="Рецепти, план харчування, покупки й щоденник їжі в одному чаті Telegram. Без обов’язкової підписки. Оплата за використання. Закрите тестування.">
+  <meta property="og:title" content="PlateLoop — Telegram-бот для щоденного харчування">
+  <meta property="og:description" content="Рецепти, меню й щоденник їжі в одному чаті Telegram.">
   <meta property="og:url" content="https://plateloop.app/">
   <meta property="og:image" content="https://plateloop.app/brand/social-cover.jpg">
   <meta property="og:image:alt" content="PlateLoop — твоя їжа у своєму ритмі">
@@ -34,19 +34,22 @@
   <meta property="og:image:height" content="630">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="PlateLoop — (не) ще один щоденник калорій">
-  <meta name="twitter:description" content="Рецепти, план харчування, покупки й щоденник їжі в одному чаті Telegram. Без обов’язкової підписки. Оплата за використання. Закрите тестування.">
+  <meta name="twitter:title" content="PlateLoop — Telegram-бот для щоденного харчування">
+  <meta name="twitter:description" content="Рецепти, меню й щоденник їжі в одному чаті Telegram.">
   <meta name="twitter:image" content="https://plateloop.app/brand/social-cover.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="plateloop.css">
+  <link rel="stylesheet" href="styles.css?v=20260920b">
+  <link rel="stylesheet" href="plateloop.css?v=20260920b">
   <noscript><style>
     .inside .tabs { display: none; }
     .scene, .scene[hidden] { display: flex; }
     .scene + .scene { border-top: 1px solid var(--hairline-2); }
+    .switcher { display: none; }
+    .scenario[hidden] { display: block; }
+    .scenario + .scenario { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--hairline-2); }
   </style></noscript>
 
   <script type="application/ld+json" id="jsonld">
@@ -59,7 +62,7 @@
       "alternateName": "PlateLoop",
       "url": "https://plateloop.app/",
       "inLanguage": "uk",
-      "description": "Рецепти, план харчування, покупки й щоденник їжі в одному чаті Telegram. Без обов’язкової підписки. Закрите тестування."
+      "description": "Рецепти, меню й щоденник їжі в одному чаті Telegram."
     },
     {
       "@type": "SoftwareApplication",
@@ -73,7 +76,7 @@
       ],
       "url": "https://plateloop.app/",
       "image": "https://plateloop.app/brand/social-cover.jpg",
-      "description": "Telegram-бот для щоденника їжі, власних рецептів, плану харчування та списку покупок. Оплата за використання. Закрите тестування. Оцінки поживності приблизні.",
+      "description": "Telegram-бот для щоденника їжі, власних рецептів, меню та списку покупок. Оцінки поживності приблизні.",
       "sameAs": [
         "https://t.me/plateloop_bot?start=web_plateloop"
       ]
@@ -86,15 +89,31 @@
           "name": "Чи потрібен окремий застосунок?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Достатньо Telegram. Відкрий бота й почни розмову українською або англійською."
+            "text": "Ні. Достатньо Telegram: окремий застосунок PlateLoop ставити не треба. Відкрий бота й почни розмову українською або англійською."
           }
         },
         {
           "@type": "Question",
-          "name": "Як працює оплата?",
+          "name": "З чого почати в боті?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Платиш лише за використані платні функції. Обов’язкової підписки немає. Публічні тарифи ще не оголошені."
+            "text": "Відкрий бота й надішли перше повідомлення — наприклад, що ти щойно з’їв. Бот покаже чернетку: перевір порції, за потреби виправ словами й підтверди запис."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Як подивитися записи й підсумок дня?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Підсумок дня складається з підтверджених записів: страви, калорії та поживні речовини. Відкрий його в боті, щоб побачити свій день."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Як додати рецепт?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Надішли текст, фото або посилання з Instagram / TikTok, перевір чернетку й збережи."
           }
         },
         {
@@ -107,26 +126,10 @@
         },
         {
           "@type": "Question",
-          "name": "Як додати рецепт?",
+          "name": "Що означає тестування і де залишити відгук?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Надішли текст або фото, перевір чернетку й збережи. Імпорт за посиланнями з Instagram і TikTok поки недоступний."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Чи можна забрати або видалити свої дані?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Так. Експорт і видалення доступні просто в боті."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Що означає закрите тестування?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "PlateLoop ще вдосконалюється. Доступ — через бота, а відгуки та пропозиції можна залишити кнопкою «💬 Фідбек»."
+            "text": "PlateLoop ще вдосконалюється. Спробуй бота для своєї задачі й розкажи, що зручно, а чого бракує, — через кнопку «💬 Фідбек» у боті."
           }
         }
       ]
@@ -145,8 +148,8 @@
         <span class="brand-name" data-site="brand">PlateLoop</span>
       </a>
       <nav class="nav" aria-label="Навігація">
-        <a href="#inside">Як працює</a>
-        <a href="#pricing">Оплата</a>
+        <a href="#how">Як це працює</a>
+        <a href="#scenarios">Сценарії</a>
         <a href="#faq">Питання</a>
       </nav>
       <a class="btn btn-sm btn-dark" data-site="botUrl" data-site-attr="href" href="https://t.me/plateloop_bot?start=web_plateloop">
@@ -161,10 +164,10 @@
     <section class="hero" id="top">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="badge">Харчування в Telegram</p>
-          <h1><span class="hero-line"><span class="hero-not">(Не)</span> ще один</span><br>щоденник<br><em>калорій.</em></h1>
+          <p class="badge">Telegram-бот для щоденного харчування</p>
+          <h1>Рецепти, меню й щоденник їжі —<br>в одному чаті.</h1>
           <p class="lead">
-            Рецепти, меню, покупки й щоденник їжі — в одному чаті.
+            Зберігай улюблені рецепти, плануй страви й покупки або просто записуй, що їси. Почни з того, що потрібно сьогодні.
           </p>
           <div class="cta-row">
             <a class="btn btn-lg" data-site="botUrl" data-site-attr="href" href="https://t.me/plateloop_bot?start=web_plateloop">
@@ -172,13 +175,13 @@
               Відкрити в Telegram
             </a>
           </div>
-          <p class="hero-beta">Закрите тестування</p>
+          <p class="hero-note">Окремий застосунок PlateLoop не потрібен.</p>
         </div>
 
         <div class="plateloop-hero">
           <img class="hero-photo" src="img/plateloop-borscht.webp" alt="Домашній борщ зі сметаною та кропом, житній хліб на кремовому столі" width="1536" height="1024" fetchpriority="high">
           <div class="hero-chat-card">
-            <div class="preview-top"><img src="brand/avatar-pine.svg" width="25" height="25" alt="">PlateLoop <small>Приклад</small></div>
+            <div class="preview-top"><img src="brand/avatar-pine.svg" width="25" height="25" alt="">PlateLoop</div>
             <p class="preview-message"><span>«На обід борщ і хліб»</span><strong>≈ 420 ккал</strong></p>
             <div class="preview-result"><svg aria-hidden="true"><use href="brand/icons.svg#confirm"/></svg>Перевір і підтверди</div>
           </div>
@@ -187,77 +190,55 @@
 
     </section>
 
-    <!-- ================= FEATURES (bento) ================= -->
-    <section class="section section-tint" id="features" aria-labelledby="features-title">
+    <!-- ================= HOW IT WORKS ================= -->
+    <section class="section section-tint" id="how" aria-labelledby="how-title">
       <div class="wrap">
         <div class="section-head reveal">
-          <p class="eyebrow">Можливості</p>
-          <h2 id="features-title">Від рецепта<br>до щоденника.</h2>
-          <p class="section-lead">Користуйся всім або лише тим, що потрібно.</p>
+          <h2 id="how-title">Як це працює в Telegram</h2>
+          <p class="section-lead">Звичні повідомлення та кнопки. Рецепти й записи — в одному чаті, окремий застосунок PlateLoop ставити не треба.</p>
         </div>
-
-        <div class="bento">
-          <article class="bento-card b-recipe reveal" style="--d:.1s">
-            <div class="bento-visual">
-              <div class="mini-card recipe-card">
-                <p class="kicker">📖 Чернетка рецепта</p>
-                <p class="rc-title">Сирники зі сметаною</p>
-                <p class="rc-meta">сніданок · ⏱ 25 хв · 🍽 2 порції</p>
-                <p class="rc-ing">▸ Інгредієнти (5)</p>
-                <p class="rc-ing">▸ Кроки (4)</p>
-              </div>
-              <div class="mini-kb"><span class="on">✅ Зберегти</span><span>✏️ Редагувати</span></div>
+        <ol class="steps">
+          <li class="step-card reveal">
+            <div class="step-visual">
+              <div class="mini-kb"><span class="on">Відкрити в Telegram</span></div>
             </div>
-            <h3 class="feature-heading"><svg class="feature-icon" aria-hidden="true"><use href="brand/icons.svg#recipe"/></svg>Свої рецепти</h3>
-            <p>Зберігай рецепти з тексту чи фото. Улюблені страви завжди під рукою.</p>
-          </article>
-
-          <article class="bento-card b-plan reveal" style="--d:.15s">
-            <div class="bento-visual">
-              <div class="week">
-                <div class="week-day"><span>Пн</span><b>Сирники</b><b>Борщ</b><b>Гречка з грибами</b></div>
-                <div class="week-day"><span>Вт</span><b>Вівсянка</b><b>Плов</b><b>Салат з тунцем</b></div>
-                <div class="week-day"><span>Ср</span><b>Омлет</b><b>Борщ</b><b class="swap">🔁 Замінити</b></div>
-                <div class="week-day dim"><span>Чт</span><b>Сирники</b><b>Паста</b><b>Рагу</b></div>
-              </div>
-            </div>
-            <h3 class="feature-heading"><svg class="feature-icon" aria-hidden="true"><use href="brand/icons.svg#plan"/></svg>План на тиждень</h3>
-            <p>Складай меню зі своїх рецептів і замінюй страви, коли змінюються плани.</p>
-          </article>
-
-          <article class="bento-card b-shop reveal" style="--d:.2s">
-            <div class="bento-visual">
-              <ul class="checklist">
-                <li class="done"><i></i>Буряк <small>1 кг</small></li>
-                <li class="done"><i></i>Картопля <small>1,5 кг</small></li>
-                <li><i></i>Сметана <small>400 г</small></li>
-                <li><i></i>Кисломолочний сир <small>500 г</small></li>
-                <li><i></i>Гречка <small>800 г</small></li>
-              </ul>
-            </div>
-            <h3 class="feature-heading"><svg class="feature-icon" aria-hidden="true"><use href="brand/icons.svg#shopping"/></svg>Список покупок</h3>
-            <p>Збирай інгредієнти з плану в один список. Позначай куплене або копіюй список.</p>
-          </article>
-
-          <article class="bento-card b-log reveal">
-            <div class="bento-visual">
+            <span class="step-n">01</span>
+            <h3>Відкрий бота</h3>
+            <p>Натисни кнопку й почни розмову українською або англійською.</p>
+          </li>
+          <li class="step-card reveal" style="--d: .1s">
+            <div class="step-visual">
               <div class="input-stack">
-                <div class="in-row"><span class="in-ico">Aa</span><span>грецький салат, 300 г</span></div>
-                <div class="in-row"><span class="in-ico">📷</span><span class="in-img" style="background-image:url(img/plateloop-breakfast.webp)"></span><span>сніданок</span></div>
+                <div class="in-row"><span class="in-ico">Aa</span><span>борщ + хліб</span></div>
+                <div class="in-row"><span class="in-ico">📷</span><span>фото тарілки</span></div>
                 <div class="in-row"><span class="in-ico">🎤</span><span class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="in-dur">0:04</span></div>
               </div>
             </div>
-            <h3 class="feature-heading"><svg class="feature-icon" aria-hidden="true"><use href="brand/icons.svg#camera"/></svg>Щоденник їжі</h3>
-            <p>Надсилай текст, фото чи голос. Перевіряй оцінку калорій і зберігай запис.</p>
-          </article>
-
-        </div>
+            <span class="step-n">02</span>
+            <h3>Надішли, що з’їв</h3>
+            <p>Текст, фото або голосове — звичайним повідомленням.</p>
+          </li>
+          <li class="step-card reveal" style="--d: .2s">
+            <div class="step-visual">
+              <div class="mini-card">
+                <p class="kicker">🍽 Чернетка страви</p>
+                <p>борщ — 400 г · 320 ккал</p>
+              </div>
+              <div class="mini-kb">
+                <span class="on">✅ Підтвердити</span><span>✏️ Виправити</span>
+              </div>
+            </div>
+            <span class="step-n">03</span>
+            <h3>Перевір і підтверди</h3>
+            <p>Бот покаже чернетку з порціями й приблизною поживністю. Виправ словами, якщо треба.</p>
+          </li>
+        </ol>
       </div>
     </section>
 
-    <!-- ================= INSIDE THE BOT ================= -->
+    <!-- ================= SCENARIOS ================= -->
     <section class="section" id="inside" aria-labelledby="inside-title">
-      <span id="how" class="section-anchor" aria-hidden="true"></span>
+      <span id="scenarios" class="section-anchor" aria-hidden="true"></span>
       <div class="wrap inside" data-demo="journal">
         <div class="inside-copy reveal">
           <p class="eyebrow">Щоденник їжі</p>
@@ -342,7 +323,7 @@
         <div class="inside-copy reveal">
           <p class="eyebrow">Планування харчування</p>
           <h2 id="planning-title">Сплануй, що приготувати.</h2>
-          <p class="section-lead">Збережи рецепт із тексту чи фото. Склади меню зі своїх рецептів, заміни страви за потреби та отримай список інгредієнтів для покупок.</p>
+          <p class="section-lead">Збережи рецепт із тексту, фото або посилання з Instagram / TikTok. Склади меню зі своїх рецептів, заміни страви за потреби та отримай список інгредієнтів для покупок.</p>
           <p class="scenario-path">Свої рецепти → меню → список покупок</p>
           <div class="tabs" role="tablist" aria-label="Меню і покупки">
             <button class="tab is-active" role="tab" aria-selected="true" aria-controls="scene-plan" id="tab-plan" data-scene="plan"><span class="tab-title">Меню на тиждень</span></button>
@@ -419,18 +400,15 @@
       </div>
     </section>
 
-    <!-- ================= PRICING ================= -->
-    <section class="section section-dark pricing" id="pricing" aria-labelledby="pricing-title">
-      <span id="principles" class="section-anchor" aria-hidden="true"></span>
+    <!-- ================= AUTHOR ================= -->
+    <section class="section" id="author" aria-labelledby="author-title">
       <div class="wrap">
-        <div class="pricing-heading">
-          <div class="section-head">
-            <p class="eyebrow eyebrow-light">Оплата за використання</p>
-            <h2 id="pricing-title">Користуєшся — платиш.<br><em>Не користуєшся — ні.</em></h2>
-          </div>
-          <p class="pricing-intro">Без обов’язкової підписки.<br>Оплачуєш лише використані платні функції.</p>
+        <div class="section-head reveal">
+          <h2 id="author-title">Від автора</h2>
         </div>
-        <p class="pricing-status">Триває закрите тестування. Публічні тарифи ще не оголошені.</p>
+        <blockquote class="author-quote reveal">
+          Я створюю PlateLoop, щоб рецепти, плани й щоденні записи про їжу можна було тримати в одному місці. Зараз вдосконалюю бота й хочу зрозуміти, що справді допомагає в повсякденному житті. Спробуй його для своєї задачі та розкажи, що зручно, а чого бракує — через кнопку «💬 Фідбек» у боті.
+        </blockquote>
       </div>
     </section>
 
@@ -443,27 +421,27 @@
         <div class="faq">
           <details>
             <summary>Чи потрібен окремий застосунок?<i aria-hidden="true"></i></summary>
-            <p>Достатньо Telegram. Відкрий бота й почни розмову українською або англійською.</p>
+            <p>Ні. Достатньо Telegram: окремий застосунок PlateLoop ставити не треба. Відкрий бота й почни розмову українською або англійською.</p>
           </details>
           <details>
-            <summary>Як працює оплата?<i aria-hidden="true"></i></summary>
-            <p>Платиш лише за використані платні функції. Обов’язкової підписки немає. Публічні тарифи ще не оголошені.</p>
+            <summary>З чого почати в боті?<i aria-hidden="true"></i></summary>
+            <p>Відкрий бота й надішли перше повідомлення — наприклад, що ти щойно з’їв. Бот покаже чернетку: перевір порції, за потреби виправ словами й підтверди запис.</p>
+          </details>
+          <details>
+            <summary>Як подивитися записи й підсумок дня?<i aria-hidden="true"></i></summary>
+            <p>Підсумок дня складається з підтверджених записів: страви, калорії та поживні речовини. Відкрий його в боті, щоб побачити свій день.</p>
+          </details>
+          <details>
+            <summary>Як додати рецепт?<i aria-hidden="true"></i></summary>
+            <p>Надішли текст, фото або посилання з Instagram / TikTok, перевір чернетку й збережи.</p>
           </details>
           <details>
             <summary>Наскільки точний підрахунок калорій?<i aria-hidden="true"></i></summary>
             <p>Оцінки приблизні. Перевір продукти й порції та за потреби уточни їх перед збереженням. PlateLoop не надає медичних або дієтологічних рекомендацій.</p>
           </details>
           <details>
-            <summary>Як додати рецепт?<i aria-hidden="true"></i></summary>
-            <p>Надішли текст або фото, перевір чернетку й збережи. Імпорт за посиланнями з Instagram і TikTok поки недоступний.</p>
-          </details>
-          <details>
-            <summary>Чи можна забрати або видалити свої дані?<i aria-hidden="true"></i></summary>
-            <p>Так. Експорт і видалення доступні просто в боті.</p>
-          </details>
-          <details>
-            <summary>Що означає закрите тестування?<i aria-hidden="true"></i></summary>
-            <p>PlateLoop ще вдосконалюється. Доступ — через бота, а відгуки та пропозиції можна залишити кнопкою «💬 Фідбек».</p>
+            <summary>Що означає тестування і де залишити відгук?<i aria-hidden="true"></i></summary>
+            <p>PlateLoop ще вдосконалюється. Спробуй бота для своєї задачі й розкажи, що зручно, а чого бракує, — через кнопку «💬 Фідбек» у боті.</p>
           </details>
         </div>
       </div>
@@ -473,8 +451,8 @@
     <section class="cta-final" aria-labelledby="cta-title">
       <div class="wrap">
         <div class="cta-card reveal">
-          <h2 id="cta-title">Твоя їжа. <em>Твій ритм.</em></h2>
-          <p>Почни з одного повідомлення.</p>
+          <h2 id="cta-title">Спробуй записати<br>один прийом їжі.</h2>
+          <p>Почни з одного повідомлення — бот покаже чернетку й підкаже наступний крок.</p>
           <a class="btn btn-lg btn-light" data-site="botUrl" data-site-attr="href" href="https://t.me/plateloop_bot?start=web_plateloop">
             <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.9 4.6 18.8 19.4c-.2 1-.9 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-.9.5l.3-4.7 8.5-7.7c.4-.3-.1-.5-.6-.2L7.1 13.4 2.6 12c-1-.3-1-1 .2-1.4l17.8-6.9c.8-.3 1.5.2 1.3 1.4Z"/></svg>
             Відкрити в Telegram
@@ -494,6 +472,6 @@
     </div>
   </footer>
 
-  <script src="app.js" defer></script>
+  <script src="app.js?v=20260920b" defer></script>
 </body>
 </html>

@@ -76,7 +76,7 @@ async function main(){
       const data=await page.locator('#jsonld').textContent();assert(JSON.parse(data)['@graph'].some(x=>x.name==='PlateLoop у Telegram'));
       const faq=JSON.parse(data)['@graph'].find(x=>x['@type']==='FAQPage');
       const visibleFaq=await page.locator('.faq details').evaluateAll(xs=>xs.map(x=>({question:x.querySelector('summary').textContent.trim(),answer:x.querySelector('p').textContent.trim()})));
-      assert.deepEqual(faq.mainEntity.map(x=>({question:x.name,answer:x.acceptedAnswer.text})),visibleFaq,'Structured FAQ differs from visible payment or product information');
+      assert.deepEqual(faq.mainEntity.map(x=>({question:x.name,answer:x.acceptedAnswer.text})),visibleFaq,'Structured FAQ differs from visible product information');
       assert.equal(await page.locator('meta[property="og:title"]').getAttribute('content'),await page.title(),'Social title differs from page title');
       const missingAnchors=await page.locator('a[href^="#"]').evaluateAll(xs=>xs.filter(x=>!document.getElementById(x.getAttribute('href').slice(1))).map(x=>x.getAttribute('href')));
       assert.deepEqual(missingAnchors,[],'Navigation points to missing sections');
@@ -99,7 +99,7 @@ async function main(){
     await demo.locator('#inside').scrollIntoViewIfNeeded();await demo.clock.runFor(16000);
     assert.equal(await demo.locator('#tab-plan').getAttribute('aria-selected'),'true','The demo changes without user input');
     await manual.close();
-    report.push('PASS payment FAQ matches JSON-LD; navigation anchors, social titles, deep links and manual demo behavior');
+    report.push('PASS FAQ matches JSON-LD; navigation anchors, social titles, deep links and manual demo behavior');
     await page.setViewportSize({width:1440,height:1000});
     await page.goto(base+'/brand/',{waitUntil:'networkidle'});
     await page.evaluate(async()=>{for(let y=0;y<document.body.scrollHeight;y+=700){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,40));}window.scrollTo(0,0);});

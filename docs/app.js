@@ -15,7 +15,7 @@
       if (attr) el.setAttribute(attr, val);
       else el.textContent = val;
     });
-    var title = s.brand + " — (не) ще один щоденник калорій";
+    var title = s.brand + " — Telegram-бот для щоденного харчування";
     document.title = title;
     [
       ['meta[property="og:title"]', title],
