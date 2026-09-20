@@ -110,8 +110,14 @@ h3 { line-height:1.3; }
 /* A user-controlled demo, with time to read every example. */
 .inside { gap:72px; }
 #inside { position:relative; }
-.inside + .inside { margin-top:80px; padding-top:80px; border-top:1px solid var(--hairline); }
-.scenario-path { margin-top:20px; color:var(--muted); font-size:.8125rem; line-height:1.8; }
+.telegram-benefits { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:40px; }
+.telegram-benefits article { padding-top:22px; border-top:1px solid var(--hairline); }
+.telegram-benefits h3 { margin-bottom:12px; }
+.telegram-benefits p,.flow-copy p { color:var(--muted); line-height:1.8; }
+.flow-copy { margin-top:28px; min-height:190px; max-width:480px; }
+.flow-copy h3 { font-size:1.25rem; margin-bottom:12px; }
+.flow-copy[hidden] { display:none; }
+.recipe-method { margin-top:12px; }
 .inside-copy .section-lead { max-width:32rem; }
 .inside .tabs { display:flex; gap:4px; width:100%; max-width:480px; margin-top:28px; padding:5px; border:1px solid #183d3212; border-radius:16px; background:#183d3206; }
 .inside .tab { display:flex; flex:1; align-items:center; justify-content:center; min-width:0; min-height:44px; padding:10px 12px; border:0; border-radius:11px; background:transparent; color:var(--muted); text-align:center; transition:background-color .18s ease,color .18s ease,box-shadow .18s ease; }
@@ -294,7 +300,8 @@ h3 { line-height:1.3; }
   .inside .tab { padding:10px 6px; border-radius:10px; }
   .inside .tab-title { font-size:.8125rem; }
   .inside { gap:28px; }
-  .inside + .inside { margin-top:48px; padding-top:48px; }
+  .telegram-benefits { grid-template-columns:1fr; gap:24px; }
+  .flow-copy { min-height:210px; }
   .phone-tour .phone-screen { min-height:580px; }
   .pricing h2 { font-size:clamp(1.6rem,6.7vw,2.4rem); line-height:1.3; }
   .pricing-status { margin-top:30px; }

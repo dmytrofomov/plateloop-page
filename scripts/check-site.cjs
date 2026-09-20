@@ -50,22 +50,25 @@ async function main(){
       assert.equal(await page.locator('h1').count(),1);
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`Overflow at ${width}`);
       await page.locator('#inside').scrollIntoViewIfNeeded();
-      for(const name of ['log','day','plan','shop']){
+      for(const name of ['log','recipes','shop']){
         await page.locator('#tab-'+name).click();
         assert.equal(await page.locator('#tab-'+name).getAttribute('aria-selected'),'true');
         assert.equal(await page.locator('#scene-'+name).isVisible(),true);
       }
-      await page.locator('#tab-day').press('Home');
+      assert.equal(await page.locator('.phone-tour').count(),1,'The three flows must share one demo');
+      assert.equal(await page.locator('[data-flow=shop]').isVisible(),true);
+      await page.locator('#tab-shop').press('Home');
+      assert.equal(await page.locator('#tab-log').getAttribute('aria-selected'),'true');
+      assert.equal(await page.locator('[data-flow=shop]').isVisible(),false);
+      await page.locator('#tab-log').press('ArrowLeft');
+      assert.equal(await page.locator('#tab-shop').getAttribute('aria-selected'),'true');
+      await page.locator('#tab-shop').press('ArrowRight');
       assert.equal(await page.locator('#tab-log').getAttribute('aria-selected'),'true');
       await page.locator('#tab-log').press('ArrowRight');
-      assert.equal(await page.locator('#tab-day').getAttribute('aria-selected'),'true');
-      await page.locator('#tab-day').press('ArrowRight');
-      assert.equal(await page.locator('#tab-log').getAttribute('aria-selected'),'true','Journal keyboard navigation must stay in its scenario');
-      assert.equal(await page.locator('#scene-shop').isVisible(),true,'Changing the journal must preserve the planning selection');
-      await page.locator('#tab-shop').press('Home');
-      assert.equal(await page.locator('#tab-plan').getAttribute('aria-selected'),'true');
-      assert.equal(await page.locator('#scene-log').isVisible(),true,'Changing planning must preserve the journal selection');
-      assert.equal(await page.locator('[data-demo] .tabs').count(),2,'Scenarios need independent tab groups');
+      assert.equal(await page.locator('#scene-recipes').isVisible(),true);
+      assert.equal(await page.locator('[data-flow=recipes]').isVisible(),true);
+      assert.equal(await page.locator('#scene-log').isVisible(),false);
+      assert.doesNotMatch(await page.locator('main').innerText(),/плануван|меню на тиждень|Сплануй|Приклад інтерфейсу/i,'Retired flows or redundant captions remain');
       await page.locator('#faq').scrollIntoViewIfNeeded();
       await page.locator('summary').nth(1).click();
       assert.equal(await page.locator('.faq details').nth(1).getAttribute('open'),'');
@@ -83,21 +86,17 @@ async function main(){
       await page.evaluate(async()=>{for(let y=0;y<document.body.scrollHeight;y+=700){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,40));}window.scrollTo(0,0);});
       assert.equal(await page.locator('img').evaluateAll(xs=>xs.filter(x=>!x.complete||!x.naturalWidth).length),0,'Broken page image');
       await page.screenshot({path:path.join(out,`landing-${width}.png`),fullPage:true});
-      report.push(`PASS ${width}px: no overflow, PlateLoop metadata, 4 tabs, keyboard, FAQ, Telegram links, all images loaded`);
+      report.push(`PASS ${width}px: no overflow, PlateLoop metadata, 3 flows, keyboard, FAQ, Telegram links, all images loaded`);
     }
-    await page.goto(base+'/?scene=plan',{waitUntil:'networkidle'});
-    assert.equal(await page.locator('#scene-plan').isVisible(),true,'Deep link does not select the requested demo');
-    await page.locator('#tab-plan').press('End');
-    await page.locator('#tab-shop').press('ArrowRight');
-    assert.equal(await page.locator('#tab-plan').getAttribute('aria-selected'),'true','Planning keyboard navigation must wrap within planning');
-    await page.goto(base+'/?scene=day',{waitUntil:'networkidle'});
-    assert.equal(await page.locator('#scene-day').isVisible(),true,'Journal deep link is lost');
-    assert.equal(await page.locator('#scene-plan').isVisible(),true,'Journal deep link must preserve the planning demo');
+    for(const [requested,expected] of [['recipes','recipes'],['shop','shop'],['day','log'],['plan','recipes']]){
+      await page.goto(base+'/?scene='+requested,{waitUntil:'networkidle'});
+      assert.equal(await page.locator('#scene-'+expected).isVisible(),true,'Deep link failed: '+requested);
+    }
     // Once chosen, an example must not switch itself while a visitor is reading.
     const manual=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});
-    const demo=await manual.newPage();await demo.clock.install();await demo.goto(base+'/?scene=plan',{waitUntil:'networkidle'});
+    const demo=await manual.newPage();await demo.clock.install();await demo.goto(base+'/?scene=recipes',{waitUntil:'networkidle'});
     await demo.locator('#inside').scrollIntoViewIfNeeded();await demo.clock.runFor(16000);
-    assert.equal(await demo.locator('#tab-plan').getAttribute('aria-selected'),'true','The demo changes without user input');
+    assert.equal(await demo.locator('#tab-recipes').getAttribute('aria-selected'),'true','The demo changes without user input');
     await manual.close();
     report.push('PASS FAQ matches JSON-LD; navigation anchors, social titles, deep links and manual demo behavior');
     await page.setViewportSize({width:1440,height:1000});
@@ -117,7 +116,7 @@ async function main(){
     const plain=await noJs.newPage();await plain.goto(base+'/',{waitUntil:'load'});
     assert.equal(await plain.locator('#inside-title').evaluate(e=>getComputedStyle(e.closest('.reveal')).opacity),'1');
     assert.equal(await plain.locator('h1').isVisible(),true);
-    for(const name of ['log','day','plan','shop'])assert.equal(await plain.locator('#scene-'+name).isVisible(),true,'Demo content missing without JavaScript: '+name);
+    for(const name of ['log','recipes','shop'])assert.equal(await plain.locator('#scene-'+name).isVisible(),true,'Demo content missing without JavaScript: '+name);
     await noJs.close();
     assert.deepEqual(errors,[],'Browser JavaScript errors');
     report.push('PASS no JavaScript fallback and mobile brand kit; no JavaScript errors');

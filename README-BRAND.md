@@ -9,7 +9,7 @@ Static GitHub Pages, published from `master:/docs`. `docs/CNAME` sets the custom
 Product name: **PlateLoop**. Current Telegram URL: **https://t.me/plateloop_bot**.
 The Telegram username stays live until the bot itself is renamed. Update `window.SITE` plus static HTML / metadata when the actual address changes.
 
-Positioning: **(Не) ще один щоденник калорій.** Recipes, meal planning, shopping and food logging in one Telegram chat. Use the whole cycle or only the parts you need.
+Positioning: **(Не) ще один щоденник калорій.** Three flows in one Telegram chat: calories, recipe import and saved recipes, and shopping lists. Recipes and food entries accept photo, voice or text; recipes also support Instagram/TikTok link import. No meal planning.
 
 Brand line: **Твоя їжа. Твій ритм.** While the product is in testing, the landing carries no payment promo block and no payment promises: no public tariffs, no invented amounts, packages or billing terms.
 
@@ -39,6 +39,6 @@ Verification runs a local HTTP server and headless Chrome, checks 1440/768/390/3
 
 ## Copy boundaries
 
-Closed beta: text/photo/voice → approximate nutrition draft → user confirmation; diary/goals; own recipes (including Instagram/TikTok link import); plan/shopping. Do not claim medical advice, exact nutritional measurements, guaranteed outcomes, user statistics or an unannounced price. Marketing mockups are illustrative.
+Closed beta: text/photo/voice → approximate nutrition draft → user confirmation; diary/goals; own recipes from photo/voice/text (including Instagram/TikTok link import); shopping lists. Do not claim medical advice, exact nutritional measurements, guaranteed outcomes, user statistics or an unannounced price. Marketing mockups are illustrative.
 
 The bot code and Telegram account are managed separately. This deployment changes the website and promotional identity.

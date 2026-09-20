@@ -13,7 +13,7 @@
     };
   </script>
   <title>PlateLoop — Telegram-бот для щоденного харчування</title>
-  <meta name="description" content="Рецепти, меню й щоденник їжі в одному чаті Telegram.">
+  <meta name="description" content="Калорії, рецепти та список покупок у Telegram. Надсилай фото, голос або текст, імпортуй рецепти з Instagram і TikTok. Без окремого застосунку.">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#183D32">
   <meta name="color-scheme" content="light">
@@ -26,7 +26,7 @@
   <meta property="og:locale" content="uk_UA">
   <meta property="og:site_name" content="PlateLoop у Telegram">
   <meta property="og:title" content="PlateLoop — Telegram-бот для щоденного харчування">
-  <meta property="og:description" content="Рецепти, меню й щоденник їжі в одному чаті Telegram.">
+  <meta property="og:description" content="Калорії, рецепти та список покупок у Telegram. Надсилай фото, голос або текст, імпортуй рецепти з Instagram і TikTok. Без окремого застосунку.">
   <meta property="og:url" content="https://plateloop.app/">
   <meta property="og:image" content="https://plateloop.app/brand/social-cover.jpg">
   <meta property="og:image:alt" content="PlateLoop — твоя їжа у своєму ритмі">
@@ -35,21 +35,19 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="PlateLoop — Telegram-бот для щоденного харчування">
-  <meta name="twitter:description" content="Рецепти, меню й щоденник їжі в одному чаті Telegram.">
+  <meta name="twitter:description" content="Калорії, рецепти та список покупок у Telegram. Надсилай фото, голос або текст, імпортуй рецепти з Instagram і TikTok. Без окремого застосунку.">
   <meta name="twitter:image" content="https://plateloop.app/brand/social-cover.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260920b">
-  <link rel="stylesheet" href="plateloop.css?v=20260920b">
+  <link rel="stylesheet" href="styles.css?v=20260920c">
+  <link rel="stylesheet" href="plateloop.css?v=20260920c">
   <noscript><style>
     .inside .tabs { display: none; }
+    .flow-copy[hidden] { display: block; }
     .scene, .scene[hidden] { display: flex; }
     .scene + .scene { border-top: 1px solid var(--hairline-2); }
-    .switcher { display: none; }
-    .scenario[hidden] { display: block; }
-    .scenario + .scenario { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--hairline-2); }
   </style></noscript>
 
   <script type="application/ld+json" id="jsonld">
@@ -62,7 +60,7 @@
       "alternateName": "PlateLoop",
       "url": "https://plateloop.app/",
       "inLanguage": "uk",
-      "description": "Рецепти, меню й щоденник їжі в одному чаті Telegram."
+      "description": "Калорії, рецепти та список покупок у Telegram. Надсилай фото, голос або текст, імпортуй рецепти з Instagram і TikTok. Без окремого застосунку."
     },
     {
       "@type": "SoftwareApplication",
@@ -76,7 +74,7 @@
       ],
       "url": "https://plateloop.app/",
       "image": "https://plateloop.app/brand/social-cover.jpg",
-      "description": "Telegram-бот для щоденника їжі, власних рецептів, меню та списку покупок. Оцінки поживності приблизні.",
+      "description": "Калорії, рецепти та список покупок у Telegram. Надсилай фото, голос або текст, імпортуй рецепти з Instagram і TikTok. Без окремого застосунку.",
       "sameAs": [
         "https://t.me/plateloop_bot?start=web_plateloop"
       ]
@@ -113,7 +111,15 @@
           "name": "Як додати рецепт?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Надішли текст, фото або посилання з Instagram / TikTok, перевір чернетку й збережи."
+            "text": "Надішли фото, голосове, текст або посилання з Instagram чи TikTok. Бот підготує рецепт: перевір інгредієнти та приготування й збережи у свої рецепти."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Як користуватися списком покупок?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Додай потрібні продукти до списку в боті. Відкрий його в магазині й позначай куплене — усе в тому самому чаті Telegram."
           }
         },
         {
@@ -154,7 +160,7 @@
       </nav>
       <a class="btn btn-sm btn-dark" data-site="botUrl" data-site-attr="href" href="https://t.me/plateloop_bot?start=web_plateloop">
         <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.9 4.6 18.8 19.4c-.2 1-.9 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-.9.5l.3-4.7 8.5-7.7c.4-.3-.1-.5-.6-.2L7.1 13.4 2.6 12c-1-.3-1-1 .2-1.4l17.8-6.9c.8-.3 1.5.2 1.3 1.4Z"/></svg>
-        Відкрити бот
+        Відкрити в Telegram
       </a>
     </div>
   </header>
@@ -164,10 +170,9 @@
     <section class="hero" id="top">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="badge">Telegram-бот для щоденного харчування</p>
-          <h1>Рецепти, меню й щоденник їжі —<br>в одному чаті.</h1>
+          <h1>Твоя їжа —<br>у чаті Telegram.</h1>
           <p class="lead">
-            Зберігай улюблені рецепти, плануй страви й покупки або просто записуй, що їси. Почни з того, що потрібно сьогодні.
+            PlateLoop — Telegram-бот для калорій, рецептів і покупок. Надішли фото, голосове або текст, щоб записати з’їдене чи зберегти рецепт. Рецепти з Instagram і TikTok — просто посиланням.
           </p>
           <div class="cta-row">
             <a class="btn btn-lg" data-site="botUrl" data-site-attr="href" href="https://t.me/plateloop_bot?start=web_plateloop">
@@ -175,7 +180,7 @@
               Відкрити в Telegram
             </a>
           </div>
-          <p class="hero-note">Окремий застосунок PlateLoop не потрібен.</p>
+          <p class="hero-note">Уже маєш Telegram? Нічого додатково завантажувати не потрібно.</p>
         </div>
 
         <div class="plateloop-hero">
@@ -190,68 +195,36 @@
 
     </section>
 
-    <!-- ================= HOW IT WORKS ================= -->
     <section class="section section-tint" id="how" aria-labelledby="how-title">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2 id="how-title">Як це працює в Telegram</h2>
-          <p class="section-lead">Звичні повідомлення та кнопки. Рецепти й записи — в одному чаті, окремий застосунок PlateLoop ставити не треба.</p>
+          <h2 id="how-title">Чому саме Telegram?</h2>
+          <p class="section-lead">Чат уже знайомий: написати, надіслати фото чи записати голосове. Замість освоювати ще одну апку — просто спілкуйся з ботом.</p>
         </div>
-        <ol class="steps">
-          <li class="step-card reveal">
-            <div class="step-visual">
-              <div class="mini-kb"><span class="on">Відкрити в Telegram</span></div>
-            </div>
-            <span class="step-n">01</span>
-            <h3>Відкрий бота</h3>
-            <p>Натисни кнопку й почни розмову українською або англійською.</p>
-          </li>
-          <li class="step-card reveal" style="--d: .1s">
-            <div class="step-visual">
-              <div class="input-stack">
-                <div class="in-row"><span class="in-ico">Aa</span><span>борщ + хліб</span></div>
-                <div class="in-row"><span class="in-ico">📷</span><span>фото тарілки</span></div>
-                <div class="in-row"><span class="in-ico">🎤</span><span class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="in-dur">0:04</span></div>
-              </div>
-            </div>
-            <span class="step-n">02</span>
-            <h3>Надішли, що з’їв</h3>
-            <p>Текст, фото або голосове — звичайним повідомленням.</p>
-          </li>
-          <li class="step-card reveal" style="--d: .2s">
-            <div class="step-visual">
-              <div class="mini-card">
-                <p class="kicker">🍽 Чернетка страви</p>
-                <p>борщ — 400 г · 320 ккал</p>
-              </div>
-              <div class="mini-kb">
-                <span class="on">✅ Підтвердити</span><span>✏️ Виправити</span>
-              </div>
-            </div>
-            <span class="step-n">03</span>
-            <h3>Перевір і підтверди</h3>
-            <p>Бот покаже чернетку з порціями й приблизною поживністю. Виправ словами, якщо треба.</p>
-          </li>
-        </ol>
+        <div class="telegram-benefits">
+          <article><h3>Без нової апки</h3><p>PlateLoop працює всередині Telegram. Відкрий бота — і можна починати.</p></article>
+          <article><h3>Як тобі зручно</h3><p>Рецепт або з’їдену страву можна надіслати фото, голосом чи текстом. Виправлення — теж звичайним повідомленням.</p></article>
+          <article><h3>Кілька кліків</h3><p>Надішли, перевір, збережи. Калорії, свої рецепти та список покупок — в одному чаті, без переходів між застосунками.</p></article>
+        </div>
       </div>
     </section>
 
-    <!-- ================= SCENARIOS ================= -->
     <section class="section" id="inside" aria-labelledby="inside-title">
       <span id="scenarios" class="section-anchor" aria-hidden="true"></span>
-      <div class="wrap inside" data-demo="journal">
+      <div class="wrap inside" data-demo="flows">
         <div class="inside-copy reveal">
-          <p class="eyebrow">Щоденник їжі</p>
-          <h2 id="inside-title">Запиши, що вже з’їв.</h2>
-          <p class="section-lead">Надішли, що з’їв. Перевір порції та приблизну поживність у чернетці, підтверди запис і переглянь підсумок дня.</p>
-          <p class="scenario-path">Текст, фото чи голос → перевірка → запис у щоденнику</p>
-          <div class="tabs" role="tablist" aria-label="Запис і підсумок дня">
-            <button class="tab is-active" role="tab" aria-selected="true" aria-controls="scene-log" id="tab-log" data-scene="log"><span class="tab-title">Запис їжі</span></button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="scene-day" id="tab-day" data-scene="day" tabindex="-1"><span class="tab-title">Підсумок дня</span></button>
+          <h2 id="inside-title">Калорії, рецепти<br>та покупки.</h2>
+          <div class="tabs" role="tablist" aria-label="Можливості PlateLoop">
+            <button class="tab is-active" role="tab" aria-selected="true" aria-controls="scene-log" id="tab-log" data-scene="log" tabindex="0"><span class="tab-title">Калорії</span></button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="scene-recipes" id="tab-recipes" data-scene="recipes" tabindex="-1"><span class="tab-title">Рецепти</span></button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="scene-shop" id="tab-shop" data-scene="shop" tabindex="-1"><span class="tab-title">Покупки</span></button>
           </div>
+          <div class="flow-copy" data-flow="log"><h3>Запиши, що з’їв.</h3><p>Фото тарілки, голосове чи текст — обирай сам. Бот оцінить калорії та поживність. Перевір порції й підтверди запис: він залишиться у щоденнику та підсумку дня.</p></div>
+          <div class="flow-copy" data-flow="recipes" hidden><h3>Збережи рецепт, який хочеш повторити.</h3><p>Надішли фото, голосове, текст або посилання з Instagram чи TikTok. Бот збере рецепт з інгредієнтами й приготуванням. Перевір і збережи у свої рецепти.</p></div>
+          <div class="flow-copy" data-flow="shop" hidden><h3>Тримай покупки під рукою.</h3><p>Запиши, що потрібно купити, і відкрий список у магазині. Позначай куплене просто в Telegram.</p></div>
         </div>
         <div class="inside-stage reveal" style="--d:.1s">
-          <div class="phone phone-tour">
+          <div class="phone phone-tour" aria-label="Демонстрація PlateLoop у Telegram">
             <div class="phone-screen">
               <div class="status-bar" aria-hidden="true">
                 <span class="st-time">18:10</span>
@@ -276,8 +249,7 @@
                   <p class="kicker">🍽 Чернетка страви</p>
                   <p class="line">• борщ — 400 г · 320 ккал</p>
                   <p class="line">• хліб житній — 40 г · 100 ккал</p>
-                  <p class="totals">Разом: <strong>420 ккал</strong> · Б 18 / Ж 14 / В 52</p>
-                  <p class="hint">Якщо підтвердити · залишок 1 580 ккал</p>
+                  <p class="totals">Разом: <strong>≈ 420 ккал</strong> · Б 18 / Ж 14 / В 52</p>
                   <time>14:02</time>
                 </div>
                 <div class="kb">
@@ -287,105 +259,19 @@
                 </div>
               </div>
 
-              <div class="chat scene" id="scene-day" role="tabpanel" aria-labelledby="tab-day" hidden>
+              <div class="chat scene" id="scene-recipes" role="tabpanel" aria-labelledby="tab-recipes" hidden>
+                <div class="msg out"><p>Збережи рецепт сирників із цього відео</p><p class="hint">↗ Instagram / TikTok</p><time>09:41</time></div>
                 <div class="msg in card wide">
-                  <p class="kicker">📅 Сьогодні</p>
-                  <p class="line">сніданок · Сирники · 380 ккал</p>
-                  <p class="line">обід · Борщ + хліб · 420 ккал</p>
-                  <p class="line">перекус · Яблуко · 80 ккал</p>
-                  <p class="totals">Разом: <strong>880 ккал</strong> · Б 44 / Ж 30 / В 112</p>
-                  <div class="bars">
-                    <div class="bar"><span>Калорії <strong>880 / 2 000</strong></span><span class="track"><i style="--w:44%"></i></span></div>
-                    <div class="bar"><span>Білки <strong>44 / 120</strong></span><span class="track"><i style="--w:37%"></i></span></div>
-                    <div class="bar"><span>Жири <strong>30 / 70</strong></span><span class="track"><i style="--w:43%"></i></span></div>
-                    <div class="bar"><span>Вуглеводи <strong>112 / 250</strong></span><span class="track"><i style="--w:45%"></i></span></div>
-                  </div>
-                  <time>18:10</time>
+                  <p class="kicker">Сирники · чернетка рецепта</p>
+                  <p class="line">Кисломолочний сир — 400 г</p><p class="line">Яйце — 1 шт.</p><p class="line">Борошно — 3 ст. л.</p><p class="line">Цукор — 1 ст. л.</p>
+                  <p class="recipe-method">Змішай інгредієнти, сформуй сирники й обсмаж до золотистої скоринки.</p><time>09:41</time>
                 </div>
-                <div class="kb">
-                  <span class="kb-btn">◀ Назад</span>
-                  <span class="kb-btn">📅 Тиждень</span>
-                  <span class="kb-btn">Далі ▶</span>
-                </div>
-              </div>
-
-              <div class="composer" aria-hidden="true">
-                <svg viewBox="0 0 24 24" class="c-ico"><path d="M21.4 11.1 12 20.5a5.5 5.5 0 0 1-7.8-7.8l9.2-9.2a3.5 3.5 0 0 1 5 5l-9.2 9.1a1.5 1.5 0 0 1-2.1-2.1l8.5-8.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span class="c-input">Повідомлення</span>
-                <svg viewBox="0 0 24 24" class="c-ico"><rect x="9" y="3" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              </div>
-            </div>
-          </div>
-          <p class="demo-note">Приклад інтерфейсу · значення умовні</p>
-        </div>
-      </div>
-      <div class="wrap inside" data-demo="planning">
-        <div class="inside-copy reveal">
-          <p class="eyebrow">Планування харчування</p>
-          <h2 id="planning-title">Сплануй, що приготувати.</h2>
-          <p class="section-lead">Збережи рецепт із тексту, фото або посилання з Instagram / TikTok. Склади меню зі своїх рецептів, заміни страви за потреби та отримай список інгредієнтів для покупок.</p>
-          <p class="scenario-path">Свої рецепти → меню → список покупок</p>
-          <div class="tabs" role="tablist" aria-label="Меню і покупки">
-            <button class="tab is-active" role="tab" aria-selected="true" aria-controls="scene-plan" id="tab-plan" data-scene="plan"><span class="tab-title">Меню на тиждень</span></button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="scene-shop" id="tab-shop" data-scene="shop" tabindex="-1"><span class="tab-title">Покупки</span></button>
-          </div>
-        </div>
-        <div class="inside-stage reveal" style="--d:.1s">
-          <div class="phone phone-tour">
-            <div class="phone-screen">
-              <div class="status-bar" aria-hidden="true">
-                <span class="st-time">18:10</span>
-                <span class="island"></span>
-                <span class="st-icons">
-                  <svg viewBox="0 0 18 12" width="16" height="11"><rect x="0" y="8" width="3" height="4" rx=".6" fill="currentColor"/><rect x="5" y="5.5" width="3" height="6.5" rx=".6" fill="currentColor"/><rect x="10" y="3" width="3" height="9" rx=".6" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx=".6" fill="currentColor"/></svg>
-                  <svg viewBox="0 0 26 12" width="24" height="11"><rect x=".7" y=".7" width="21" height="10.6" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="2.4" y="2.4" width="17.6" height="7.2" rx="1.4" fill="currentColor"/><rect x="23" y="4" width="2" height="4" rx="1" fill="currentColor" opacity=".5"/></svg>
-                </span>
-              </div>
-              <div class="tg-bar">
-                <svg class="tg-back" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span class="tg-title"><strong data-site="brand">PlateLoop</strong><small>бот</small></span>
-                <img class="tg-ava" src="brand/avatar-pine.png" alt="" width="34" height="34">
-              </div>
-
-              <div class="chat scene is-active" id="scene-plan" role="tabpanel" aria-labelledby="tab-plan">
-                <div class="msg in card wide">
-                  <p class="kicker">🗓 План на 7 днів · чернетка</p>
-                  <p class="line"><strong>День 1:</strong></p>
-                  <p class="line">• Сніданок: Сирники · ⏱ 25 хв</p>
-                  <p class="line">• Обід: Борщ · ⏱ 90 хв</p>
-                  <p class="line">• Вечеря: Гречка з грибами · ⏱ 30 хв</p>
-                  <p class="line"><strong>День 2:</strong></p>
-                  <p class="line">• Сніданок: Вівсянка · ⏱ 10 хв</p>
-                  <p class="line">• Обід: Плов · ⏱ 60 хв</p>
-                  <p class="line">• Вечеря: Салат з тунцем · ⏱ 15 хв</p>
-                  <p class="hint">Зі збережених рецептів. Страви можна замінити.</p>
-                  <time>18:10</time>
-                </div>
-                <div class="kb">
-                  <span class="kb-btn">✅ Підтвердити план</span>
-                  <span class="kb-btn">🔁 Замінити: Плов</span>
-                  <span class="kb-btn">❌ Відхилити</span>
-                </div>
+                <div class="kb"><span class="kb-btn">✅ Зберегти</span><span class="kb-btn">✏️ Виправити</span></div>
               </div>
 
               <div class="chat scene" id="scene-shop" role="tabpanel" aria-labelledby="tab-shop" hidden>
-                <div class="msg in card wide">
-                  <p class="kicker">🛒 Список покупок</p>
-                  <ul class="shop">
-                    <li class="on">Буряк · 1 кг</li>
-                    <li class="on">Картопля · 1,5 кг</li>
-                    <li>Кріп · 1 пучок</li>
-                    <li>Сметана · 400 г</li>
-                    <li>Кисломолочний сир · 500 г</li>
-                    <li>Гречка · 800 г</li>
-                    <li>Гриби · 300 г</li>
-                  </ul>
-                  <time>18:12</time>
-                </div>
-                <div class="kb">
-                  <span class="kb-btn">📋 Як текст</span>
-                  <span class="kb-btn">Оновити з плану</span>
-                </div>
+                <div class="msg out"><p>Треба купити сир, яйця, борошно й яблука</p><time>18:12</time></div>
+                <div class="msg in card wide"><p class="kicker">Список покупок</p><ul class="shop"><li class="on">Кисломолочний сир</li><li class="on">Яйця</li><li>Борошно</li><li>Яблука</li></ul><time>18:12</time></div>
               </div>
 
               <div class="composer" aria-hidden="true">
@@ -395,7 +281,6 @@
               </div>
             </div>
           </div>
-          <p class="demo-note">Приклад інтерфейсу · значення умовні</p>
         </div>
       </div>
     </section>
@@ -407,7 +292,7 @@
           <h2 id="author-title">Від автора</h2>
         </div>
         <blockquote class="author-quote reveal">
-          Я створюю PlateLoop, щоб рецепти, плани й щоденні записи про їжу можна було тримати в одному місці. Зараз вдосконалюю бота й хочу зрозуміти, що справді допомагає в повсякденному житті. Спробуй його для своєї задачі та розкажи, що зручно, а чого бракує — через кнопку «💬 Фідбек» у боті.
+          Я створюю PlateLoop, щоб калорії, рецепти й список покупок можна було тримати в одному місці. Зараз вдосконалюю бота й хочу зрозуміти, що справді допомагає в повсякденному житті. Спробуй його для своєї задачі та розкажи, що зручно, а чого бракує — через кнопку «💬 Фідбек» у боті.
         </blockquote>
       </div>
     </section>
@@ -433,7 +318,11 @@
           </details>
           <details>
             <summary>Як додати рецепт?<i aria-hidden="true"></i></summary>
-            <p>Надішли текст, фото або посилання з Instagram / TikTok, перевір чернетку й збережи.</p>
+            <p>Надішли фото, голосове, текст або посилання з Instagram чи TikTok. Бот підготує рецепт: перевір інгредієнти та приготування й збережи у свої рецепти.</p>
+          </details>
+          <details>
+            <summary>Як користуватися списком покупок?<i aria-hidden="true"></i></summary>
+            <p>Додай потрібні продукти до списку в боті. Відкрий його в магазині й позначай куплене — усе в тому самому чаті Telegram.</p>
           </details>
           <details>
             <summary>Наскільки точний підрахунок калорій?<i aria-hidden="true"></i></summary>
@@ -451,8 +340,8 @@
     <section class="cta-final" aria-labelledby="cta-title">
       <div class="wrap">
         <div class="cta-card reveal">
-          <h2 id="cta-title">Спробуй записати<br>один прийом їжі.</h2>
-          <p>Почни з одного повідомлення — бот покаже чернетку й підкаже наступний крок.</p>
+          <h2 id="cta-title">Почни з одного<br>повідомлення.</h2>
+          <p>Запиши з’їдене, збережи рецепт або склади список покупок. Усе — в Telegram.</p>
           <a class="btn btn-lg btn-light" data-site="botUrl" data-site-attr="href" href="https://t.me/plateloop_bot?start=web_plateloop">
             <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.9 4.6 18.8 19.4c-.2 1-.9 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-.9.5l.3-4.7 8.5-7.7c.4-.3-.1-.5-.6-.2L7.1 13.4 2.6 12c-1-.3-1-1 .2-1.4l17.8-6.9c.8-.3 1.5.2 1.3 1.4Z"/></svg>
             Відкрити в Telegram
@@ -472,6 +361,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=20260920b" defer></script>
+  <script src="app.js?v=20260920c" defer></script>
 </body>
 </html>

@@ -76,6 +76,9 @@
           scene.classList.toggle("is-active", active);
           scene.hidden = !active;
         });
+        demo.querySelectorAll('[data-flow]').forEach(function (copy) {
+          copy.hidden = copy.getAttribute('data-flow') !== tabs[current].getAttribute('data-scene');
+        });
       };
       tabs.forEach(function (tab, i) {
         tab.addEventListener("click", function () { show(i); });
@@ -94,6 +97,7 @@
         });
       });
       var requestedScene = new URLSearchParams(location.search).get("scene");
+      requestedScene = ({ day: 'log', plan: 'recipes' })[requestedScene] || requestedScene;
       var startIndex = tabs.findIndex(function (tab) { return tab.getAttribute("data-scene") === requestedScene; });
       show(startIndex < 0 ? 0 : startIndex);
     }
