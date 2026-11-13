@@ -1,6 +1,28 @@
 (function () {
   "use strict";
 
+  /* ---------- First-touch source for the bot's /start payload ----------
+   * The bot keeps only allowlisted tokens ([a-z0-9_]); the raw query value is never passed through. */
+  var SOURCE_TOKENS = {
+    threads: "threads_organic",
+    instagram: "ig_organic",
+    ig: "ig_organic",
+    tiktok: "tt_organic",
+    tt: "tt_organic",
+    telegram: "tg_channel",
+    tg: "tg_channel"
+  };
+  var DEFAULT_TOKEN = "web_plateloop";
+  var startToken = function () {
+    var raw = "";
+    try { raw = new URLSearchParams(location.search).get("utm_source") || ""; } catch (e) { raw = ""; }
+    var key = raw.trim().toLowerCase();
+    return Object.prototype.hasOwnProperty.call(SOURCE_TOKENS, key) ? SOURCE_TOKENS[key] : DEFAULT_TOKEN;
+  };
+  var withStart = function (url, token) {
+    return String(url || "").replace(/([?&]start=)[a-z0-9_]*/, "$1" + token);
+  };
+
   /* ---------- Brand binding from window.SITE ---------- */
   var s = window.SITE;
   if (s) {
@@ -8,22 +30,24 @@
     var abs = function (path) {
       return origin + (path ? "/" + String(path).replace(/^\/+/, "") : "/");
     };
+    var values = Object.assign({}, s, { botUrl: withStart(s.botUrl, startToken()) });
     document.querySelectorAll("[data-site]").forEach(function (el) {
-      var val = s[el.getAttribute("data-site")];
+      var val = values[el.getAttribute("data-site")];
       if (val == null || val === "") return;
       var attr = el.getAttribute("data-site-attr");
       if (attr) el.setAttribute(attr, val);
       else el.textContent = val;
     });
-    var title = s.brand + " — Telegram-бот для щоденного харчування";
+    var title = s.brand + " — рецепти з Reels і TikTok у Telegram: текстом і зі списком покупок";
+    var image = abs("img/og-recipe.jpg");
     document.title = title;
     [
       ['meta[property="og:title"]', title],
       ['meta[property="og:site_name"]', s.brandLong],
       ['meta[property="og:url"]', abs("")],
-      ['meta[property="og:image"]', abs("brand/social-cover.jpg")],
+      ['meta[property="og:image"]', image],
       ['meta[name="twitter:title"]', title],
-      ['meta[name="twitter:image"]', abs("brand/social-cover.jpg")],
+      ['meta[name="twitter:image"]', image],
       ['link[rel="canonical"]', abs(""), "href"]
     ].forEach(function (row) {
       var el = document.querySelector(row[0]);
@@ -37,7 +61,7 @@
           if (node.name) node.name = s.brandLong;
           if (node.alternateName) node.alternateName = s.brand;
           if (node.url) node.url = abs("");
-          if (node.image) node.image = abs("brand/social-cover.jpg");
+          if (node.image) node.image = image;
           if (node.sameAs) node.sameAs = [s.botUrl];
         });
         ld.textContent = JSON.stringify(data);
@@ -57,49 +81,46 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll, { passive: true });
 
-  /* Tabs change only when chosen, with full keyboard navigation. */
+  /* Example tabs change only when chosen, with full keyboard navigation. */
   document.querySelectorAll("[data-demo]").forEach(function (demo) {
     var tabs = Array.prototype.slice.call(demo.querySelectorAll(".tab[data-scene]"));
     var scenes = Array.prototype.slice.call(demo.querySelectorAll(".scene"));
-    if (tabs.length && scenes.length) {
-      var current = 0;
-      var show = function (index) {
-        current = (index + tabs.length) % tabs.length;
-        tabs.forEach(function (tab, i) {
-          var active = i === current;
-          tab.classList.toggle("is-active", active);
-          tab.setAttribute("aria-selected", String(active));
-          tab.setAttribute("tabindex", active ? "0" : "-1");
-        });
-        scenes.forEach(function (scene, i) {
-          var active = i === current;
-          scene.classList.toggle("is-active", active);
-          scene.hidden = !active;
-        });
-        demo.querySelectorAll('[data-flow]').forEach(function (copy) {
-          copy.hidden = copy.getAttribute('data-flow') !== tabs[current].getAttribute('data-scene');
-        });
-      };
+    if (!tabs.length || !scenes.length) return;
+    var current = 0;
+    var show = function (index) {
+      current = (index + tabs.length) % tabs.length;
+      var name = tabs[current].getAttribute("data-scene");
       tabs.forEach(function (tab, i) {
-        tab.addEventListener("click", function () { show(i); });
-        tab.addEventListener("keydown", function (event) {
-          var index;
-          switch (event.key) {
-            case "ArrowRight": case "ArrowDown": index = i + 1; break;
-            case "ArrowLeft": case "ArrowUp": index = i - 1; break;
-            case "Home": index = 0; break;
-            case "End": index = tabs.length - 1; break;
-            default: return;
-          }
-          event.preventDefault();
-          show(index);
-          tabs[current].focus();
-        });
+        var active = i === current;
+        tab.classList.toggle("is-active", active);
+        tab.setAttribute("aria-selected", String(active));
+        tab.setAttribute("tabindex", active ? "0" : "-1");
       });
-      var requestedScene = new URLSearchParams(location.search).get("scene");
-      requestedScene = ({ day: 'log', plan: 'recipes' })[requestedScene] || requestedScene;
-      var startIndex = tabs.findIndex(function (tab) { return tab.getAttribute("data-scene") === requestedScene; });
-      show(startIndex < 0 ? 0 : startIndex);
-    }
+      scenes.forEach(function (scene, i) {
+        var active = i === current;
+        scene.classList.toggle("is-active", active);
+        scene.hidden = !active;
+      });
+      demo.querySelectorAll("[data-flow]").forEach(function (copy) {
+        copy.hidden = copy.getAttribute("data-flow") !== name;
+      });
+    };
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener("click", function () { show(i); });
+      tab.addEventListener("keydown", function (event) {
+        var index;
+        switch (event.key) {
+          case "ArrowRight": case "ArrowDown": index = i + 1; break;
+          case "ArrowLeft": case "ArrowUp": index = i - 1; break;
+          case "Home": index = 0; break;
+          case "End": index = tabs.length - 1; break;
+          default: return;
+        }
+        event.preventDefault();
+        show(index);
+        tabs[current].focus();
+      });
+    });
+    show(0);
   });
 })();
